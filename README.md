@@ -94,6 +94,8 @@ while queue:
     for neighbor in get_neighbors(grid, current[0], current[1]):
         # Calculate cost, add to queue...
 ```
+### Heapq
+visit: https://docs.python.org/3/library/heapq.html
 
 ## Final Challenge
 
