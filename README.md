@@ -19,6 +19,9 @@ Implement a pathfinding algorithm to find the shortest path through a maze!
 ```bash
 pip install matplotlib numpy
 ```
+### In case pip is not installed
+visit: 
+https://pip.pypa.io/en/stable/installation/
 
 ## Files
 
