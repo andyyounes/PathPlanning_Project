@@ -71,6 +71,54 @@ python -m pip install matplotlib
 ```
 
 ---
+## Getting the Latest Updates
+
+If your teacher pushes an update to the project, here is how to get it on your laptop.
+
+### If you are using Git
+
+Check if Git is installed:
+
+```bash
+git --version
+```
+
+If not installed:
+- Go to https://git-scm.com/downloads
+- Download and install for your operating system
+- Close and reopen your terminal and try `git --version` again
+
+Pull the latest updates:
+
+```bash
+git pull
+```
+
+If that doesn't work, make sure you are in the right folder first:
+
+```bash
+cd path/to/your/project/folder
+git pull
+```
+
+---
+
+### If you are NOT using Git
+
+Your teacher will share the updated files. You have two options:
+
+**Option 1 — Download the zip**
+- Download the zip file your teacher shares
+- Extract it
+- Copy the updated files into your project folder
+- Do NOT overwrite `dijkstra.py` or `a_star.py` if you have already written code in them
+
+**Option 2 — Copy the file manually**
+- Your teacher will tell you which file changed
+- Open the new file and copy its contents
+- Paste it into your version of that file
+
+---
 
 ## How to Run
 
