@@ -191,9 +191,9 @@ nodes, edges, startNode, endNode, num_nodes, num_edges = build_nodes_and_edges(g
 
 | Level | Size | Difficulty |
 |-------|------|------------|
-| 1 | 5x5 | Easy — no walls |
-| 2 | 10x10 | Medium — some walls |
-| 3 | 10x10 | Hard — maze |
+| 1 | 5x5 | Easy: no walls |
+| 2 | 10x10 | Medium: some walls |
+| 3 | 10x10 | Hard: maze |
 
 ---
 
