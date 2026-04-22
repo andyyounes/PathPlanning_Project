@@ -1,9 +1,6 @@
 # Pathfinding Project
 
-**A-Level Computer Science - Group Project**
-
 ## Overview
-
 Implement a pathfinding algorithm to find the shortest path through a maze!
 
 **We give you:**
