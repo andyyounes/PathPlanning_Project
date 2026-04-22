@@ -141,7 +141,7 @@ python3 a_star.py
 | `visualize.py` | Draws the path on the grid | No |
 | `dijkstra.py` | Dijkstra's algorithm | Yes (Dijkstra teams) |
 | `a_star.py` | A* algorithm | Yes (A* teams) |
-
+| 'a_n_d.py' | Practice file - simple path (A to E) | Yes (everyone) |
 ---
 
 ## What You Have Inside the Function
