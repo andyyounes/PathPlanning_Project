@@ -1,4 +1,3 @@
-```markdown
 # Pathfinding Project
 
 **A-Level Computer Science - Group Project**
