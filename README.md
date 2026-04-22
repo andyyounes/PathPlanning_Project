@@ -13,7 +13,7 @@ Implement a pathfinding algorithm to find the shortest path through a maze!
 
 ## Setup
 
-### Step 1 — Check if Python is installed
+### Step 1: Check if Python is installed
 
 ```bash
 python --version
@@ -35,7 +35,7 @@ On Mac and Linux, `python3` is the correct command.
 
 ---
 
-### Step 2 — Check if pip is installed
+### Step 2: Check if pip is installed
 
 ```bash
 pip --version
@@ -49,7 +49,7 @@ python -m ensurepip --upgrade
 
 ---
 
-### Step 3 — Install matplotlib
+### Step 3: Install matplotlib
 
 ```bash
 pip install matplotlib
