@@ -41,6 +41,7 @@ def a_star(grid):
                                         from any node to the end
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
+    FSCORE = 6
     # write your code here
     
     trace=endNode
