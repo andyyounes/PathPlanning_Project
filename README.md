@@ -1,3 +1,4 @@
+```markdown
 # Pathfinding Project
 
 **A-Level Computer Science - Group Project**
@@ -7,102 +8,204 @@
 Implement a pathfinding algorithm to find the shortest path through a maze!
 
 **We give you:**
-- The cost/heuristic formulas
-- Helper functions
-- Visualization code
+- The grid maps (3 levels)
+- The data structures (nodes and edges built automatically from the grid)
+- The visualisation (plot_path draws the result for you)
 
 **You implement:**
-- The actual algorithm logic!
+- The actual algorithm logic inside `dijkstra()` or `astar()`
 
 ## Setup
 
+### Step 1 — Check if Python is installed
+
 ```bash
-pip install matplotlib numpy
+python --version
 ```
-### In case pip is not installed
-visit: 
-https://pip.pypa.io/en/stable/installation/
+
+If you see a version number, Python is installed. If not:
+- Go to https://www.python.org/downloads/
+- Download the latest version
+- During installation **make sure to tick "Add Python to PATH"**
+- Once installed, close and reopen your terminal and try `python --version` again
+
+If `python` doesn't work, try:
+
+```bash
+python3 --version
+```
+
+On Mac and Linux, `python3` is the correct command.
+
+---
+
+### Step 2 — Check if pip is installed
+
+```bash
+pip --version
+```
+
+If you see a version number, pip is installed. If not:
+
+```bash
+python -m ensurepip --upgrade
+```
+
+---
+
+### Step 3 — Install matplotlib
+
+```bash
+pip install matplotlib
+```
+
+If that doesn't work, try:
+
+```bash
+pip3 install matplotlib
+```
+
+Or:
+
+```bash
+python -m pip install matplotlib
+```
+
+---
+
+## How to Run
+
+```bash
+python dijkstra.py
+python a_star.py
+```
+
+If `python` doesn't work, try:
+
+```bash
+python3 dijkstra.py
+python3 a_star.py
+```
+
+---
 
 ## Files
 
 | File | What it does | Edit? |
 |------|--------------|-------|
-| `maps.py` | The 3 level grids | No |
-| `visualize.py` | Draws the maps | No |
+| `maps.py` | Grid maps + converts them to nodes and edges | No |
+| `visualize.py` | Draws the path on the grid | No |
 | `dijkstra.py` | Dijkstra's algorithm | Yes (Dijkstra teams) |
 | `a_star.py` | A* algorithm | Yes (A* teams) |
 
-## How to Run
+---
 
-```bash
-python dijkstra.py    # Dijkstra teams
-python a_star.py      # A* teams
+## What You Have Inside the Function
+
+When you call `build_nodes_and_edges(grid)` you get back:
+
+```python
+nodes, edges, startNode, endNode, num_nodes, num_edges = build_nodes_and_edges(grid)
 ```
 
-## The Formulas We Give You
+### nodes[i] — each node has 7 fields
 
-### Dijkstra
-```
-cost(neighbor) = cost(current) + 1
-```
-Each step costs 1. That's it!
+| Index | Constant | What it is |
+|-------|----------|------------|
+| 0 | NAME | node number as a string |
+| 1 | DISTANCE | shortest distance found so far (starts at 9999) |
+| 2 | VISITED | True/False — has this node been processed |
+| 3 | PREVIOUS | index of the node we came from |
+| 4 | ROW | row position in the grid |
+| 5 | COL | column position in the grid |
+| 6 | FSCORE | f = g + h (A* only, starts at 9999) |
 
-### A* (uses 3 values)
-```
-g(n) = actual cost from start to n
-h(n) = estimated cost from n to goal (Manhattan distance)
-f(n) = g(n) + h(n)
-```
+### edges[k] — each edge has 4 fields
 
-A* always picks the node with lowest **f** value!
+| Index | Constant | What it is |
+|-------|----------|------------|
+| 0 | EDGE_NAME | edge name |
+| 1 | EDGE_SRC | source node index |
+| 2 | EDGE_DEST | destination node index |
+| 3 | EDGE_W | weight (always 1 — one step) |
+
+### Other variables
+
+| Variable | What it is |
+|----------|------------|
+| startNode | index of the S node |
+| endNode | index of the E node |
+| num_nodes | total number of walkable nodes |
+| num_edges | total number of edges |
+
+---
 
 ## The Maps
 
 | Level | Size | Difficulty |
 |-------|------|------------|
-| 1 | 5x5 | Easy - no walls |
-| 2 | 10x10 | Medium - some walls |
-| 3 | 10x10 | Hard - maze |
-
-## Algorithm Hints
-
-### What you need:
-1. **Priority queue** - use `heapq`
-2. **Visited set** - don't revisit nodes!
-3. **came_from dict** - remember the path
-4. **cost/g_score dict** - track costs
-
-### Basic structure:
-```python
-# 1. Setup
-queue = []
-heapq.heappush(queue, (0, start))
-visited = set()
-came_from = {start: None}
-
-# 2. Main loop
-while queue:
-    cost, current = heapq.heappop(queue)
-    
-    if current == end:
-        return reconstruct_path(...)
-    
-    if current in visited:
-        continue
-    visited.add(current)
-    
-    for neighbor in get_neighbors(grid, current[0], current[1]):
-        # Calculate cost, add to queue...
-```
-### Heapq
-visit: https://docs.python.org/3/library/heapq.html
-
-## Final Challenge
-
-After everyone finishes, we'll race both algorithms on a **secret map**!
-
-Which explores fewer nodes - Dijkstra or A*?
+| 1 | 5x5 | Easy — no walls |
+| 2 | 10x10 | Medium — some walls |
+| 3 | 10x10 | Hard — maze |
 
 ---
 
-Good luck!
+## Algorithm Steps
+
+### Dijkstra
+
+```
+1. Set start node distance to 0
+
+2. REPEAT:
+   a. Find unvisited node with lowest distance — this is current_node
+   b. If current_node is endNode — stop, destination reached
+   c. If current_node is -1 — stop, no path exists
+   d. Mark current_node as visited
+   e. For each edge leaving current_node:
+      — newDistance = current distance + edge weight
+      — if neighbour unvisited AND newDistance is better:
+            update neighbour distance
+            update neighbour previousNode
+
+3. Traceback from endNode using previousNode
+```
+
+### A*
+
+```
+1. Set start node distance to 0
+   Set start node fScore to heuristic(start, end)
+
+2. REPEAT:
+   a. Find unvisited node with lowest fScore — this is current_node
+   b. If current_node is endNode — stop, destination reached
+   c. If current_node is -1 — stop, no path exists
+   d. Mark current_node as visited
+   e. For each edge leaving current_node:
+      — newG = current distance + edge weight
+      — newF = newG + heuristic(neighbour, end)
+      — if neighbour unvisited AND newF is better:
+            update neighbour distance to newG
+            update neighbour fScore to newF
+            update neighbour previousNode
+
+3. Traceback from endNode using previousNode
+```
+
+### The only difference between Dijkstra and A*
+
+| | Dijkstra | A* |
+|--|---------|-----|
+| Pick next node by | lowest distance | lowest fScore |
+| Update condition | newDistance < distance | newF < fScore |
+| Extra calculation | none | newF = newG + heuristic |
+
+---
+
+## Final Challenge
+
+After everyone finishes, we race both algorithms on Level 3.
+
+Which explores fewer nodes — Dijkstra or A*?
+```
