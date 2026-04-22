@@ -1,9 +1,9 @@
 nodes = {
-    1: {'name': 'A', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 4},
-    2: {'name': 'B', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 2},
-    3: {'name': 'C', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 3},
-    4: {'name': 'D', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 1},
-    5: {'name': 'E', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 0},
+    1: {'name': 'A', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 4, 'fscore': 9999},
+    2: {'name': 'B', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 2, 'fscore': 9999},
+    3: {'name': 'C', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 3, 'fscore': 9999},
+    4: {'name': 'D', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 1, 'fscore': 9999},
+    5: {'name': 'E', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 0, 'fscore': 9999},
 }
 
 edges = {
@@ -21,7 +21,7 @@ def reset():
         node['distance'] = 9999
         node['visited']  = False
         node['previous'] = None
-
+        node['fscore'] = 9999
 
 def traceback(startNode, endNode):
     path = []
