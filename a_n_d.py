@@ -1,38 +1,52 @@
-nodes = {
-    1: {'name': 'A', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 4, 'fscore': 9999},
-    2: {'name': 'B', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 2, 'fscore': 9999},
-    3: {'name': 'C', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 3, 'fscore': 9999},
-    4: {'name': 'D', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 1, 'fscore': 9999},
-    5: {'name': 'E', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 0, 'fscore': 9999},
-}
+#index name dist visited previous heuristic fscore
+nodes = [
+    [],#index 0 unused, so nodes[1] = A
+    ['A', 9999, False, None, 4, 9999],# node 1 = A
+    ['B', 9999, False, None, 2, 9999],# node 2 = B
+    ['C', 9999, False, None, 3, 9999],# node 3 = C
+    ['D', 9999, False, None, 1, 9999],# node 4 = D
+    ['E', 9999, False, None, 0, 9999],# node 5 = E
+]
 
-edges = {
-    1: {'name': 'A-B', 'src': 1, 'destination': 2, 'weight': 2},
-    2: {'name': 'A-C', 'src': 1, 'destination': 3, 'weight': 3},
-    3: {'name': 'B-C', 'src': 2, 'destination': 3, 'weight': 5},
-    4: {'name': 'B-E', 'src': 2, 'destination': 5, 'weight': 4},
-    5: {'name': 'C-D', 'src': 3, 'destination': 4, 'weight': 10},
-    6: {'name': 'D-E', 'src': 4, 'destination': 5, 'weight': 1},
-}
+#index name src neighbor weight
+edges = [
+    [],# index 0 unused
+    ['A-B', 1, 2, 2],#edge 1
+    ['A-C', 1, 3, 3],# edge 2
+    ['B-C', 2, 3, 5],#edge 3
+    ['B-E', 2, 5, 4],# edge 4
+    ['C-D', 3, 4, 10],# edge 5
+    ['D-E', 4, 5, 1],# edge 6
+]
 
+#column indexes for readability, use those instead of hardcoding numbers in the code below
+NAME     = 0
+DISTANCE = 1
+VISITED  = 2
+PREVIOUS = 3
+H        = 4
+FSCORE   = 5
+
+EDGE_SRC  = 1
+EDGE_DEST = 2
+EDGE_W    = 3
 
 def reset():
-    for node in nodes.values():
-        node['distance'] = 9999
-        node['visited']  = False
-        node['previous'] = None
-        node['fscore'] = 9999
+    for node in range(1, len(nodes)):
+        nodes[node][DISTANCE] = 9999
+        nodes[node][VISITED]  = False
+        nodes[node][PREVIOUS] = None
+        nodes[node][FSCORE] = 9999
 
 def traceback(startNode, endNode):
     path = []
     current_node = endNode
     while current_node is not None:
-        path.append(nodes[current_node]['name'])
-        current_node = nodes[current_node]['previous']
+        path.append(nodes[current_node][NAME])
+        current_node = nodes[current_node][PREVIOUS]
     path.reverse()
     print("Path:", " -> ".join(path))
-    print("Shortest distance:", nodes[endNode]['distance'])
-
+    print("Shortest distance:", nodes[endNode][DISTANCE])
 
 def dijkstra(startNode, endNode):
 #  write your Dijkstra's algorithm here
