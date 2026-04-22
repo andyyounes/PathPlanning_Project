@@ -1,4 +1,3 @@
-# Graph setup
 nodes = {
     1: {'name': 'A', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 4},
     2: {'name': 'B', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 2},
@@ -7,14 +6,14 @@ nodes = {
     5: {'name': 'E', 'distance': 9999, 'visited': False, 'previous': None, 'heuristic': 0},
 }
 
-edges = [
-    (1, 2, 2),  # A -> B, weight 2
-    (1, 3, 3),  # A -> C, weight 3
-    (2, 3, 5),  # B -> C, weight 5
-    (2, 5, 4),  # B -> E, weight 4
-    (3, 4, 10), # C -> D, weight 10
-    (4, 5, 1),  # D -> E, weight 1
-]
+edges = {
+    1: {'name': 'A-B', 'src': 1, 'destination': 2, 'weight': 2},
+    2: {'name': 'A-C', 'src': 1, 'destination': 3, 'weight': 3},
+    3: {'name': 'B-C', 'src': 2, 'destination': 3, 'weight': 5},
+    4: {'name': 'B-E', 'src': 2, 'destination': 5, 'weight': 4},
+    5: {'name': 'C-D', 'src': 3, 'destination': 4, 'weight': 10},
+    6: {'name': 'D-E', 'src': 4, 'destination': 5, 'weight': 1},
+}
 
 
 def reset():
@@ -24,18 +23,18 @@ def reset():
         node['previous'] = None
 
 
-def traceback(start, end):
+def traceback(startNode, endNode):
     path = []
-    current = end
-    while current is not None:
-        path.append(nodes[current]['name'])
-        current = nodes[current]['previous']
+    current_node = endNode
+    while current_node is not None:
+        path.append(nodes[current_node]['name'])
+        current_node = nodes[current_node]['previous']
     path.reverse()
     print("Path:", " -> ".join(path))
-    print("Shortest distance:", nodes[end]['distance'])
+    print("Shortest distance:", nodes[endNode]['distance'])
 
 
-def dijkstra(start, end):
+def dijkstra(startNode, endNode):
 #  write your Dijkstra's algorithm here
 
 
