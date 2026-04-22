@@ -203,8 +203,5 @@ nodes, edges, startNode, endNode, num_nodes, num_edges = build_nodes_and_edges(g
 ---
 
 ## Final Challenge
-
-After everyone finishes, we race both algorithms on Level 3.
-
 Which explores fewer nodes — Dijkstra or A*?
 ```
