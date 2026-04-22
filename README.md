@@ -143,6 +143,22 @@ python3 a_star.py
 | `a_star.py` | A* algorithm | Yes (A* teams) |
 | `a_n_d.py` | Practice file - simple path (A to E) | Yes (everyone) |
 ---
+## Start Here : a_n_d.py
+Before touching the grid levels, open `a_n_d.py` first.
+It has a simple graph with 5 named nodes (A, B, C, D, E) and 6 edges — the same one you studied in class:
+
+```
+    2       4
+A ----- B ----- E
+ \      |       |
+  3     5       1
+   \    |       |
+    C -----10-- D
+```
+
+The nodes and edges are already set up for you as 2D arrays — exactly like you learned. Your job is to implement Dijkstra or A* inside the procedure at the bottom.
+
+This is your warm up. Once it works on the named graph, the grid version in `dijkstra.py` or `a_star.py` uses the exact same algorithm the only difference is the map is bigger and built automatically.
 
 ## What You Have Inside the Function
 
