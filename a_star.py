@@ -9,6 +9,13 @@ def heuristic(nodes, node, end_node):
     col2 = nodes[end_node][COL]
     return abs(row1 - row2) + abs(col1 - col2)
 
+def findNeighbour(edges, node):
+    l = []
+    for i in range(1,len(edges)):
+        if edges[i][EDGE_SRC] == node:
+            l.append([edges[i][EDGE_DEST],edges[i][EDGE_W]])
+    return l
+
 def a_star(grid):
     """
     A* ALGORITHM STEPS:
@@ -41,9 +48,34 @@ def a_star(grid):
                                         from any node to the end
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
-    FSCORE = 6
     # write your code here
-    
+
+    nodes[startNode][DISTANCE] = 0
+    currentNode = startNode
+    for i in range(len(nodes)):
+        
+        nodes[currentNode][VISITED] = True
+        neighbours = findNeighbour(edges, currentNode)
+        ##print(neighbours)
+        for i in neighbours:
+            ##print(i)
+            if nodes[currentNode][DISTANCE] + i[1] < nodes[i[0]][DISTANCE]:
+                nodes[i[0]][DISTANCE] = nodes[currentNode][DISTANCE] + i[1] ## distance to current + edge length
+                nodes[i[0]][PREVIOUS] = currentNode
+
+        shortestNode = -1
+        shortestDist = 999
+        for j in range(1,len(nodes)):
+            if nodes[j][VISITED] == False and nodes[j][DISTANCE] + heuristic(nodes, j, endNode) < shortestDist:
+                shortestDist = nodes[j][DISTANCE] + heuristic(nodes, j, endNode)
+                shortestNode = j
+        if shortestNode == -1 or shortestNode == endNode:
+            break
+        else:
+            currentNode = shortestNode
+
+    path = []
+    visited = set()
     trace=endNode
     while trace is not None:
         path.append(trace)

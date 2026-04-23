@@ -1,6 +1,12 @@
 from maps import LEVEL_1,LEVEL_2,LEVEL_3,build_nodes_and_edges,NAME,DISTANCE,VISITED,PREVIOUS,ROW,COL,EDGE_SRC,EDGE_DEST,EDGE_W
 from visualize import plot_path
 
+def findNeighbour(edges, node):
+    l = []
+    for i in range(1,len(edges)):
+        if edges[i][EDGE_SRC] == node:
+            l.append([edges[i][EDGE_DEST],edges[i][EDGE_W]])
+    return l
 
 def dijkstra(grid):
     """
@@ -29,6 +35,30 @@ def dijkstra(grid):
        num_edges : total number of edges
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
+
+    nodes[startNode][DISTANCE] = 0
+    currentNode = startNode
+    for i in range(len(nodes)):
+        
+        nodes[currentNode][VISITED] = True
+        neighbours = findNeighbour(edges, currentNode)
+        ##print(neighbours)
+        for i in neighbours:
+            ##print(i)
+            if nodes[currentNode][DISTANCE] + i[1] < nodes[i[0]][DISTANCE]:
+                nodes[i[0]][DISTANCE] = nodes[currentNode][DISTANCE] + i[1] ## distance to current + edge length
+                nodes[i[0]][PREVIOUS] = currentNode
+
+        shortestNode = -1
+        shortestDist = 999
+        for j in range(1,len(nodes)):
+            if nodes[j][VISITED] == False and nodes[j][DISTANCE] < shortestDist:
+                shortestDist = nodes[j][DISTANCE]
+                shortestNode = j
+        if shortestNode == -1 or shortestNode == endNode:
+            break
+        else:
+            currentNode = shortestNode
 
     # write your code here
 
