@@ -1,4 +1,4 @@
-from maps import LEVEL_1,LEVEL_2,LEVEL_3,build_nodes_and_edges,NAME,DISTANCE,VISITED,PREVIOUS,ROW,COL,EDGE_SRC,EDGE_DEST,EDGE_W
+from maps import reset,LEVEL_1,LEVEL_2,LEVEL_3,build_nodes_and_edges,NAME,DISTANCE,VISITED,PREVIOUS,ROW,COL,EDGE_SRC,EDGE_DEST,EDGE_W
 from visualize import plot_path
 
 
@@ -29,8 +29,34 @@ def dijkstra(grid):
        num_edges : total number of edges
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
-
     # write your code here
+    nodes[startNode][DISTANCE] = 0
+
+    while True:
+        current = None
+        minDist = 9999
+
+        for i in range(1, num_nodes + 1):
+            if not nodes[i][VISITED] and nodes[i][DISTANCE] < minDist:
+                minDist = nodes[i][DISTANCE]
+                current = i
+
+        if current is None:
+            break
+        if current == endNode:
+            break
+
+        nodes[current][VISITED] = True
+
+        for j in range(1, num_edges +1):
+            if edges[j][EDGE_SRC] == current:
+                neighbour = edges[j][EDGE_DEST]
+                weight = edges[j][EDGE_W]
+                if not nodes[neighbour][VISITED]:
+                    newDist = nodes[current][DISTANCE]+weight
+                    if newDist < nodes[neighbour][DISTANCE]:
+                        nodes[neighbour][DISTANCE] = newDist
+                        nodes[neighbour][PREVIOUS] = current
 
     path=[]
     visited=set()

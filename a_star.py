@@ -43,19 +43,47 @@ def a_star(grid):
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
     FSCORE = 6
     # write your code here
-    
+    path=[]
+    visited= set()
+    found = False
+    while True:
+        current = None
+        minF = 9999
+        for i in range(len(nodes)):
+            if nodes[i][VISITED]==False and nodes[i][FSCORE] < minF:
+                minF = nodes[i][FSCORE]
+                current = i
+        if current==-1:
+            break
+        if current == endNode:
+            found = True
+            break
+        nodes[current][VISITED] = True
+        for j in range(len(edges)):
+            if edges[j][EDGE_SRC] == current:
+                neighbour = edges[j][EDGE_DEST]
+                weight = edges[j][EDGE_W]
+                if not nodes[neighbour][VISITED]:
+                    newG = nodes[current][DISTANCE] + weight
+                    newF = newG + heuristic(nodes, neighbour, endNode)
+                    if newF < nodes[neighbour][FSCORE]:
+                        nodes[neighbour][DISTANCE] = newG
+                        nodes[neighbour][FSCORE] = newF
+                        nodes[neighbour][PREVIOUS] = current
+
     trace=endNode
     while trace is not None:
         path.append(trace)
         trace=nodes[trace][PREVIOUS]
     path.reverse()
-    for i in range(1,num_nodes+1):
+    for i in range(1,len(nodes)):
         if nodes[i][VISITED]:
             visited.add(i)
     return nodes,path,visited
 
 # TEST YOUR CODE
 if __name__ == "__main__":
+
     print("\n" + "="*50)
     print(" A* ALGORITHM")
     print("="*50)
