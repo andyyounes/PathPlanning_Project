@@ -43,12 +43,35 @@ def a_star(grid):
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
     FSCORE = 6
     # write your code here
+    '''
+    these are missing from your code
+     1. The build_nodes_and_edges function in maps.py:92 creates each node with only 6 fields:
+        
+        nodes.append([str(counter), 9999, False, None, r, c])
+        #              NAME          DIST  VISIT  PREV  ROW COL
+        #              index 0       1     2      3     4   5
+        There's no 7th slot for FSCORE (index 6). So when your code does nodes[i][FSCORE] where FSCORE = 6, Python throws IndexError because index 6 doesn't exist yet.
+        
+        That loop manually adds the missing FSCORE field to every node by appending 9999 (infinity) as a starting value — the same default used for DISTANCE:
+        
+        
+        for i in range(1, num_nodes + 1):
+            nodes[i].append(9999)  # now nodes[i] has index 6 = FSCORE # add this
+        After this, nodes[i][6] exists and can be read/written safely.
+        
+        The range(1, num_nodes + 1) skips index 0 because nodes[0] is always [] — a dummy placeholder so that node numbering starts at 1 (matching the rest of the codebase).
+
+
+     2. Set start node distance to 0
+     3. set start node fScore to heuristic(start, end)
+    '''
     path=[]
     visited= set()
     found = False
     while True:
         current = None
         minF = 9999
+        # better to do 1, len(nodes)
         for i in range(len(nodes)):
             if nodes[i][VISITED]==False and nodes[i][FSCORE] < minF:
                 minF = nodes[i][FSCORE]
@@ -59,6 +82,7 @@ def a_star(grid):
             found = True
             break
         nodes[current][VISITED] = True
+        # better to do 1, len(edges)
         for j in range(len(edges)):
             if edges[j][EDGE_SRC] == current:
                 neighbour = edges[j][EDGE_DEST]
