@@ -18,12 +18,38 @@ def bfs(grid):
     found = False
     path =[]
     # Step 2 — Initialise: set start distance to 0 and enqueue it
-    ''' YOUR CODE HERE '''
-    # Step 3 — BFS main loop
-    ''' YOUR CODE HERE '''
+    nodes[start_node][DISTANCE] = 0
+    found = False
 
-    # Step 4 — Explore neighbours via edges
-    ''' YOUR CODE HERE '''
+    # Step 3 — BFS main loop
+    while True:
+        current_node = None
+        min_distance = 99999
+        for i in range(1, 1+num_nodes):
+            if nodes[i][DISTANCE]<min_distance and not nodes[i][VISITED]:
+                min_distance = nodes[i][DISTANCE]
+                current_node = i
+        
+        if current_node == None or min_distance == 99999:
+            print("No way")
+            break
+        if current_node == end_node:
+            break
+
+        nodes[current_node][VISITED] = True
+        for i in range(1, num_edges + 1):
+            if edges[i][EDGE_SRC] == current_node:
+                neighbour = edges[i][EDGE_DEST]
+                weight = edges[i][EDGE_W]
+                
+                new_distance = nodes[current_node][DISTANCE] + weight
+
+                if not nodes[neighbour][VISITED]:
+                    if new_distance < nodes[neighbour][DISTANCE]:
+                        nodes[neighbour][DISTANCE] = new_distance
+                        nodes[neighbour][PREVIOUS] = current_node
+                        found = True
+
 
     # Step 5 — Reconstruct path 
     if found:
