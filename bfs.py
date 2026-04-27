@@ -1,6 +1,14 @@
 from maps import LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4,build_nodes_and_edges, reset, NAME, DISTANCE, VISITED, PREVIOUS, ROW, COL, EDGE_SRC, EDGE_DEST, EDGE_W
 from visualize import plot_path
+import queue
 
+def findNeighbour(edges, node):
+    l = []
+    for i in range(1,len(edges)):
+        print(edges[i][EDGE_SRC] == node)
+        if edges[i][EDGE_SRC] == node:
+            l.append(edges[i][EDGE_DEST])
+    return l
 
 def bfs(grid):
     """
@@ -16,14 +24,34 @@ def bfs(grid):
     # Step 1 — Build nodes and edges from the grid
     nodes, edges, start_node, end_node, num_nodes, num_edges = build_nodes_and_edges(grid)
     found = False
-    path =[]
+    path = []
     # Step 2 — Initialise: set start distance to 0 and enqueue it
-    ''' YOUR CODE HERE '''
-    # Step 3 — BFS main loop
-    ''' YOUR CODE HERE '''
+    
+    toExplore = queue.Queue()
+    toExplore.put(nodes[start_node])
+    nodes[start_node][DISTANCE] = 0
+    nodes[start_node][VISITED] = True
+    currentNode = nodes[start_node]
 
-    # Step 4 — Explore neighbours via edges
-    ''' YOUR CODE HERE '''
+    # Step 3 — BFS main loop
+    print(end_node)
+
+    while not toExplore.empty():
+        currentNode = toExplore.get()
+        if int(currentNode[NAME]) == end_node:
+            found = True
+            break
+        else:
+            neighbours = findNeighbour(edges,int(currentNode[NAME]))
+            print(neighbours)
+            for i in neighbours:
+                if nodes[i][VISITED] == False:
+                    nodes[i][DISTANCE] = currentNode[DISTANCE] + 1
+                    nodes[i][PREVIOUS] = int(currentNode[NAME])
+                    nodes[i][VISITED] = True
+                    toExplore.put(nodes[i])
+        print(currentNode, toExplore.empty())
+
 
     # Step 5 — Reconstruct path 
     if found:
