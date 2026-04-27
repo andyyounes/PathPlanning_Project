@@ -1,4 +1,4 @@
-from maps import LEVEL_1, LEVEL_2, LEVEL_3, build_nodes_and_edges, reset, NAME, DISTANCE, VISITED, PREVIOUS, ROW, COL, EDGE_SRC, EDGE_DEST, EDGE_W
+from maps import LEVEL_1, LEVEL_2, LEVEL_3,build_nodes_and_edges, reset, NAME, DISTANCE, VISITED, PREVIOUS, ROW, COL, EDGE_SRC, EDGE_DEST, EDGE_W
 from visualize import plot_path, print_grid, print_grid_with_path, print_grid_with_explored
 
 
@@ -43,47 +43,30 @@ def a_star(grid):
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
     FSCORE = 6
     # write your code here
-    '''
-    these are missing from your code
-     1. The build_nodes_and_edges function in maps.py:92 creates each node with only 6 fields:
-        
-        nodes.append([str(counter), 9999, False, None, r, c])
-        #              NAME          DIST  VISIT  PREV  ROW COL
-        #              index 0       1     2      3     4   5
-        There's no 7th slot for FSCORE (index 6). So when your code does nodes[i][FSCORE] where FSCORE = 6, Python throws IndexError because index 6 doesn't exist yet.
-        
-        That loop manually adds the missing FSCORE field to every node by appending 9999 (infinity) as a starting value — the same default used for DISTANCE:
-        
-        
-        for i in range(1, num_nodes + 1):
-            nodes[i].append(9999)  # now nodes[i] has index 6 = FSCORE # add this
-        After this, nodes[i][6] exists and can be read/written safely.
-        
-        The range(1, num_nodes + 1) skips index 0 because nodes[0] is always [] — a dummy placeholder so that node numbering starts at 1 (matching the rest of the codebase).
+    for i in range(1, num_nodes + 1):
+        nodes[i].append(9999)
 
+    nodes[startNode][DISTANCE] = 0
+    nodes[startNode][FSCORE] = heuristic(nodes, startNode, endNode)
 
-     2. Set start node distance to 0
-     3. set start node fScore to heuristic(start, end)
-    '''
-    path=[]
-    visited= set()
+    path = []
+    visited = set()
     found = False
+
     while True:
         current = None
         minF = 9999
-        # better to do 1, len(nodes)
-        for i in range(len(nodes)):
-            if nodes[i][VISITED]==False and nodes[i][FSCORE] < minF:
+        for i in range(1, len(nodes)):
+            if nodes[i][VISITED] == False and nodes[i][FSCORE] < minF:
                 minF = nodes[i][FSCORE]
                 current = i
-        if current==-1:
+        if current is None:   
             break
         if current == endNode:
             found = True
             break
         nodes[current][VISITED] = True
-        # better to do 1, len(edges)
-        for j in range(len(edges)):
+        for j in range(1,len(edges)):
             if edges[j][EDGE_SRC] == current:
                 neighbour = edges[j][EDGE_DEST]
                 weight = edges[j][EDGE_W]
@@ -94,7 +77,6 @@ def a_star(grid):
                         nodes[neighbour][DISTANCE] = newG
                         nodes[neighbour][FSCORE] = newF
                         nodes[neighbour][PREVIOUS] = current
-
     trace=endNode
     while trace is not None:
         path.append(trace)
