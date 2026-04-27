@@ -42,7 +42,45 @@ def a_star(grid):
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
     FSCORE = 6
-    # write your code here
+    for i in range(1, num_nodes+1):
+        nodes[i].append(9999)
+
+    #my code
+    nodes[startNode][DISTANCE] = 0
+    nodes[startNode][FSCORE] = heuristic(nodes, startNode, endNode)
+
+
+    while True:
+        currentNode = None
+        minFScore = 99999
+        for i in range(1,num_nodes+1):
+            if not nodes[i][VISITED] and nodes[i][FSCORE]<minFScore:
+                minFScore = nodes[i][FSCORE]
+                currentNode = i
+        
+        if currentNode == None or minFScore == 99999:
+            print("No way")
+            break
+        if currentNode == endNode:
+            break
+
+        nodes[currentNode][VISITED] = True
+        for i in range(1, num_edges + 1):
+            if edges[i][EDGE_SRC] == currentNode:
+                neighbour = edges[i][EDGE_DEST]
+                weight = edges[i][EDGE_W]
+                
+                new_distance = nodes[currentNode][DISTANCE] + weight
+                new_Fscore = new_distance + heuristic(nodes, neighbour, endNode)
+
+                if not nodes[neighbour][VISITED]:
+                    if new_Fscore < nodes[neighbour][FSCORE]:
+                        nodes[neighbour][DISTANCE] = new_distance
+                        nodes[neighbour][FSCORE] = new_Fscore
+                        nodes[neighbour][PREVIOUS] = currentNode
+
+    path = []
+    visited = set()
     
     trace=endNode
     while trace is not None:
