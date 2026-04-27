@@ -30,34 +30,7 @@ def dijkstra(grid):
     """
     nodes,edges,startNode,endNode,num_nodes,num_edges = build_nodes_and_edges(grid)
 
-    #my code
-    nodes[startNode][DISTANCE] = 0
-
-    while True:
-        currentNode = None
-        minDistance = 99999
-        for i in range(1,num_nodes+1):
-            if not nodes[i][VISITED] and nodes[i][DISTANCE]<minDistance:
-                minDistance = nodes[i][DISTANCE]
-                currentNode = i
-        if currentNode == None or minDistance == 99999:
-            print("No way")
-            break
-        if currentNode == endNode:
-            break
-        nodes[currentNode][VISITED] = True
-        for i in range(1, num_edges + 1):
-            if edges[i][EDGE_SRC] == currentNode:
-                neighbour = edges[i][EDGE_DEST]
-                weight = edges[i][EDGE_W]
-                
-                new_distance = nodes[currentNode][DISTANCE] + weight
-
-                if not nodes[neighbour][VISITED]:
-                    if new_distance < nodes[neighbour][DISTANCE]:
-                        nodes[neighbour][DISTANCE] = new_distance
-                        nodes[neighbour][PREVIOUS] = currentNode
-
+    # write your code here
 
     path=[]
     visited=set()
