@@ -97,9 +97,19 @@ If that doesn't work, make sure you are in the right folder first:
 cd path/to/your/project/folder
 git pull
 ```
+### If you are using Git
 
----
-
+Each student works on their own branch. Do this **once** at the start of the project to create your branch:
+```
+     git checkout -b your-branch-name
+```
+To get the latest updates from your teacher:
+```
+    git checkout main
+    git pull
+    git checkout your-branch-name
+    git merge main
+```
 ### If you are NOT using Git
 
 Your teacher will share the updated files. You have two options:
